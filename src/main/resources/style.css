@@ -1,46 +1,42 @@
 .main-bg {
-    -fx-background-color: #0b0e14;
-    -fx-border-color: #00d4ff;
-    -fx-border-width: 1px;
+    -fx-background-color: #08080a;
 }
 
-/* Sidebar Styling */
 .sidebar {
-    -fx-background-color: #0f121a;
-    -fx-padding: 20;
-    -fx-border-color: transparent #1d252f transparent transparent;
+    -fx-background-color: #0c0c0e;
+    -fx-border-color: transparent #1a1a1c transparent transparent;
 }
 
-/* Glowing Header */
 .header-text {
-    -fx-font-size: 28px;
+    -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-text-fill: linear-gradient(to right, #00d4ff, #00ffbc);
-    -fx-effect: dropshadow(gaussian, #00d4ff, 15, 0.3, 0, 0);
+    -fx-text-fill: #00d4ff;
+    -fx-effect: dropshadow(gaussian, rgba(0, 212, 255, 0.4), 10, 0.5, 0, 0);
 }
 
-/* Glass Pane for Terminal */
 .terminal-area {
-    -fx-control-inner-background: #151a21;
+    -fx-control-inner-background: #0f0f12;
     -fx-text-fill: #00d4ff;
     -fx-font-family: "Consolas";
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-    -fx-border-color: #1d252f;
-    -fx-padding: 10;
+    -fx-border-color: #1a1a1c;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
 }
 
-/* Animated Progress Bar */
-.progress-bar .bar {
-    -fx-background-color: linear-gradient(to right, #00d4ff, #00ffbc);
-    -fx-background-radius: 50;
-}
-
-/* Styled Scan Button */
 .scan-button {
-    -fx-background-color: #00d4ff;
-    -fx-text-fill: #000;
+    -fx-background-color: linear-gradient(to right, #00d4ff, #0080ff);
+    -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-background-radius: 5;
+    -fx-padding: 12 30;
     -fx-cursor: hand;
+}
+
+.scan-button:hover {
+    -fx-effect: dropshadow(gaussian, #00d4ff, 15, 0, 0, 0);
+}
+
+.progress-bar .bar {
+    -fx-background-color: #00d4ff;
+    -fx-background-radius: 10;
 }
