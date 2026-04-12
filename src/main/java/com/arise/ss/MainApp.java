@@ -7,71 +7,80 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class MainApp extends Application {
     private TextArea logArea;
     private ProgressBar progressBar;
+    private Label fileCountLabel;
     private Label statusLabel;
 
     @Override
     public void start(Stage stage) {
-        // Use a BorderPane for a "Scanner Dashboard" look
         BorderPane root = new BorderPane();
         root.getStyleClass().add("main-bg");
 
         // --- SIDEBAR ---
-        VBox sidebar = new VBox(20);
-        sidebar.setPrefWidth(180);
+        VBox sidebar = new VBox(25);
+        sidebar.setPrefWidth(200);
         sidebar.getStyleClass().add("sidebar");
-        Label navTitle = new Label("ARISE ENGINE");
-        navTitle.setStyle("-fx-text-fill: #555; -fx-font-weight: bold;");
-        sidebar.getChildren().add(navTitle);
+        
+        Label sideTitle = new Label("SCAN STATS");
+        sideTitle.getStyleClass().add("side-label");
+        
+        fileCountLabel = new Label("0");
+        fileCountLabel.getStyleClass().add("stat-value");
+        Label fileText = new Label("FILES ANALYZED");
+        fileText.setStyle("-fx-text-fill: #484f58; -fx-font-size: 10px;");
+
+        statusLabel = new Label("IDLE");
+        statusLabel.getStyleClass().add("stat-value");
+        statusLabel.setStyle("-fx-text-fill: #238636;");
+
+        sidebar.getChildren().addAll(sideTitle, fileCountLabel, fileText, new Separator(), statusLabel);
         root.setLeft(sidebar);
 
-        // --- CENTER CONTENT ---
-        VBox content = new VBox(25);
-        content.setPadding(new Insets(40));
-        content.setAlignment(Pos.CENTER_LEFT);
-
-        Label header = new Label("SCANNER DASHBOARD");
+        // --- MAIN CONTENT ---
+        VBox center = new VBox(20);
+        center.setPadding(new Insets(30));
+        
+        Label header = new Label("ARISE INTELLIGENT SCANNER");
         header.getStyleClass().add("header-text");
 
         logArea = new TextArea();
-        logArea.setPrefHeight(300);
+        logArea.setEditable(false);
         logArea.getStyleClass().add("terminal-area");
+        logArea.setPrefHeight(350);
 
         progressBar = new ProgressBar(0);
         progressBar.setMaxWidth(Double.MAX_VALUE);
 
-        Button startBtn = new Button("INITIALIZE DEEP SCAN");
-        startBtn.getStyleClass().add("scan-button");
-        startBtn.setPrefHeight(45);
-        startBtn.setPrefWidth(250);
+        Button scanBtn = new Button("LAUNCH DEEP ANALYSIS");
+        scanBtn.getStyleClass().add("scan-button");
 
-        statusLabel = new Label("READY TO PROTECT");
-        statusLabel.setStyle("-fx-text-fill: #555; -fx-font-size: 14px;");
+        center.getChildren().addAll(header, logArea, progressBar, scanBtn);
+        root.setCenter(center);
 
-        content.getChildren().addAll(header, logArea, progressBar, startBtn, statusLabel);
-        root.setCenter(content);
+        scanBtn.setOnAction(e -> {
+            scanBtn.setDisable(true);
+            logArea.clear();
+            statusLabel.setText("RUNNING");
+            statusLabel.setStyle("-fx-text-fill: #d29922;");
 
-        startBtn.setOnAction(e -> {
-            startBtn.setDisable(true);
             new Thread(new ScannerEngine((progress, msg, severity) -> {
                 Platform.runLater(() -> {
                     if (progress >= 0) progressBar.setProgress(progress);
                     if (msg != null) logArea.appendText(msg + "\n");
                     if (progress >= 1.0) {
-                        startBtn.setDisable(false);
-                        statusLabel.setText("ANALYSIS FINISHED - CHECK DESKTOP");
+                        scanBtn.setDisable(false);
+                        statusLabel.setText("FINISHED");
+                        statusLabel.setStyle("-fx-text-fill: #238636;");
                     }
                 });
             })).start();
         });
 
-        Scene scene = new Scene(root, 850, 550);
-        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
-        stage.setScene(scene);
+        stage.setScene(new Scene(root, 950, 600));
+        stage.setTitle("Arise SS Tool - v1.0.0");
         stage.show();
     }
 
