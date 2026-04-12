@@ -1,0 +1,16 @@
+.main-bg { -fx-background-color: #0d0d0d; }
+.primary-btn {
+    -fx-background-color: #00d4ff;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-background-radius: 4;
+}
+.primary-btn:hover { -fx-background-color: #00aacc; }
+.log-area {
+    -fx-control-inner-background: #151515;
+    -fx-text-fill: #00ff41;
+    -fx-font-family: 'Consolas', monospace;
+    -fx-border-color: #333;
+}
+.progress-bar .bar { -fx-background-color: #00d4ff; }
