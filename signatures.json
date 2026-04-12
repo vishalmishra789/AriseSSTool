@@ -1,1 +1,12 @@
-
+{
+  "blacklistedHashes": [
+    { "name": "Vape V4", "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" },
+    { "name": "Meteor Client", "hash": "f2ca1bb6c7e907d06dafe4687e579fce76b3776e63bc175e129054a1074e0541" }
+  ],
+  "blacklistedProcesses": [
+    "vape.exe", "cheatengine-x86_64.exe", "itami.exe", "drip.exe"
+  ],
+  "suspiciousStrings": [
+    "killaura", "clickgui", "reachmod", "autoclicker", "velocitymod"
+  ]
+}
