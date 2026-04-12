@@ -16,31 +16,32 @@ jobs:
           cache: 'maven'
 
       - name: Build JAR with Maven
+        # This creates the AriseSSTool-1.0.0.jar in the target folder
         run: mvn clean package
 
-      - name: Debug - List Files After Build
+      - name: Debug - List Files in Target
         run: dir target/
 
       - name: Create EXE with jpackage
+        # This bundles the JAR and the Java Runtime into a single EXE installer
         run: |
           jpackage --type exe `
           --dest . `
           --name AriseSSTool `
           --input target/ `
           --main-jar AriseSSTool-1.0.0.jar `
-          --main-class com.arise.ss.MainApp `
+          --main-class com.arise.ss.Launcher `
           --win-shortcut `
           --win-menu `
           --vendor "AriseDev" `
           --app-version "1.0.0"
 
-      - name: Debug - List Current Directory
+      - name: Debug - List Root Directory
         run: dir
 
       - name: Upload EXE Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: AriseSSTool-Installer
-          # This wildcard path will find any .exe in the root folder
+          name: AriseSSTool-Windows-Installer
           path: "*.exe"
           retention-days: 5
