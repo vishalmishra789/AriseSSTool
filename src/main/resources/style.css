@@ -1,48 +1,46 @@
-.main-bg {
-    -fx-background-color: #05070a;
+.ocean-bg {
+    -fx-background-color: #010409;
 }
 
-.sidebar {
-    -fx-background-color: #0a0d14;
-    -fx-padding: 30 15;
-    -fx-border-color: transparent #1a202c transparent transparent;
+.ocean-card {
+    -fx-background-color: #0d1117;
+    -fx-border-color: #30363d;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 15;
 }
 
-.nav-button {
-    -fx-background-color: transparent;
-    -fx-text-fill: #a0aec0;
-    -fx-font-size: 13px;
+.ocean-console {
+    -fx-control-inner-background: #0d1117;
+    -fx-text-fill: #58a6ff;
+    -fx-font-family: "Consolas", monospace;
+    -fx-font-size: 11px;
+    -fx-border-color: #30363d;
+    -fx-border-radius: 4px;
+}
+
+.ocean-btn {
+    -fx-background-color: #21262d;
+    -fx-text-fill: #c9d1d9;
     -fx-font-weight: bold;
-    -fx-alignment: CENTER_LEFT;
-    -fx-padding: 10 15;
+    -fx-border-color: #30363d;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 12 30;
     -fx-cursor: hand;
 }
 
-.nav-button:hover {
-    -fx-background-color: #1a202c;
-    -fx-text-fill: #00d4ff;
+.ocean-btn:hover {
+    -fx-background-color: #30363d;
 }
 
-.header-text {
-    -fx-font-size: 28px;
-    -fx-font-weight: 800;
-    -fx-text-fill: #ffffff;
-    -fx-effect: dropshadow(gaussian, rgba(0, 212, 255, 0.4), 15, 0, 0, 0);
-}
-
-.terminal-area {
-    -fx-control-inner-background: #0d1117;
-    -fx-text-fill: #58a6ff;
-    -fx-font-family: "Consolas";
-    -fx-border-color: #30363d;
-    -fx-border-radius: 10;
+.progress-bar .track {
+    -fx-background-color: #21262d;
     -fx-background-radius: 10;
 }
 
-.scan-button {
-    -fx-background-color: linear-gradient(to right, #00d4ff, #0080ff);
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-background-radius: 8;
-    -fx-padding: 15 40;
+.progress-bar .bar {
+    -fx-background-color: #238636;
+    -fx-background-radius: 10;
 }
