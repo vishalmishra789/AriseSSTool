@@ -1,92 +1,46 @@
-/* 
-   ARISE SS TOOL - PROFESSIONAL STYLESHEET 
-   Theme: Cyber-Dark / Neon Blue
-*/
-
-/* 1. Main Background with subtle radial gradient */
 .main-bg {
-    -fx-background-color: radial-gradient(center 50% 50%, radius 100%, #1a1a2e, #0b0b0e);
-}
-
-/* 2. Header Text with Neon Glow */
-.header-text {
-    -fx-font-family: "Segoe UI", "Arial Black", sans-serif;
-    -fx-font-size: 34px;
-    -fx-font-weight: 900;
-    -fx-text-fill: #00d4ff;
-    -fx-effect: dropshadow(gaussian, rgba(0, 212, 255, 0.6), 20, 0.5, 0, 0);
-    -fx-letter-spacing: 2px;
-}
-
-/* 3. Information/Description Text */
-.info-text {
-    -fx-font-family: "Segoe UI Semilight";
-    -fx-font-size: 14px;
-    -fx-text-fill: #8899a6;
-    -fx-text-alignment: center;
-}
-
-/* 4. The Action Button (Solid Cyan) */
-.action-button {
-    -fx-background-color: linear-gradient(to bottom, #00d4ff, #0099cc);
-    -fx-background-radius: 10px;
-    -fx-text-fill: #000000;
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-padding: 12 45;
-    -fx-cursor: hand;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 212, 255, 0.4), 10, 0, 0, 0);
-}
-
-/* 5. The Scan Button (Hollow Neon Design) */
-.scan-button {
-    -fx-background-color: rgba(0, 212, 255, 0.05);
+    -fx-background-color: #0b0e14;
     -fx-border-color: #00d4ff;
-    -fx-border-width: 2px;
-    -fx-border-radius: 10px;
-    -fx-background-radius: 10px;
-    -fx-text-fill: #00d4ff;
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-padding: 15 30;
-    -fx-cursor: hand;
-    -fx-transition: 0.3s;
-}
-
-.scan-button:hover {
-    -fx-background-color: rgba(0, 212, 255, 0.2);
-    -fx-effect: dropshadow(gaussian, #00d4ff, 15, 0, 0, 0);
-}
-
-/* 6. Modern Progress Bar */
-.progress-bar {
-    -fx-pref-height: 12px;
-}
-
-.progress-bar .track {
-    -fx-background-color: rgba(255, 255, 255, 0.05);
-    -fx-background-insets: 0;
-    -fx-background-radius: 20px;
-}
-
-.progress-bar .bar {
-    -fx-background-color: linear-gradient(to right, #00d4ff, #00ff41);
-    -fx-background-insets: 0;
-    -fx-background-radius: 20px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 212, 255, 0.5), 10, 0, 0, 0);
-}
-
-/* 7. Terminal Log Area (Hacker Style) */
-.terminal-area {
-    -fx-control-inner-background: rgba(0, 0, 0, 0.6);
-    -fx-text-fill: #00ff41;
-    -fx-font-family: "Consolas", "Monospace";
-    -fx-font-size: 13px;
-    -fx-border-color: rgba(0, 212, 255, 0.2);
     -fx-border-width: 1px;
-    -fx-border-radius: 5px;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    -fx-background-color: #0f121a;
+    -fx-padding: 20;
+    -fx-border-color: transparent #1d252f transparent transparent;
+}
+
+/* Glowing Header */
+.header-text {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: linear-gradient(to right, #00d4ff, #00ffbc);
+    -fx-effect: dropshadow(gaussian, #00d4ff, 15, 0.3, 0, 0);
+}
+
+/* Glass Pane for Terminal */
+.terminal-area {
+    -fx-control-inner-background: #151a21;
+    -fx-text-fill: #00d4ff;
+    -fx-font-family: "Consolas";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #1d252f;
     -fx-padding: 10;
 }
 
-/* 8. Scrollbar Styling (Making it look dark) */
-.terminal-area .scr
+/* Animated Progress Bar */
+.progress-bar .bar {
+    -fx-background-color: linear-gradient(to right, #00d4ff, #00ffbc);
+    -fx-background-radius: 50;
+}
+
+/* Styled Scan Button */
+.scan-button {
+    -fx-background-color: #00d4ff;
+    -fx-text-fill: #000;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
