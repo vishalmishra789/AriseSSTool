@@ -1,133 +1,89 @@
 package com.arise.ss;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import java.util.List;
+import java.util.Map;
 
 public class MainApp extends Application {
     private TextArea logArea;
-    private ProgressBar progressBar;
-    private Label statusLabel;
-    private Label filesScannedLabel;
-    private Label threatsLabel;
+    private Label cleanLabel, suspiciousLabel, detectedLabel;
+    private Button scanBtn;
+    private SignatureManager sigManager = new SignatureManager();
 
     @Override
     public void start(Stage stage) {
-        BorderPane root = new BorderPane();
+        VBox root = new VBox(20);
         root.getStyleClass().add("ocean-bg");
+        root.setPadding(new Insets(30));
 
-        // --- HEADER ---
-        VBox header = new VBox(5);
-        header.setAlignment(Pos.CENTER);
-        header.setPadding(new Insets(20));
-        Label title = new Label("Arise Anti-Cheat");
-        title.setStyle("-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #58a6ff;");
-        Label sub = new Label("SYSTEM SCAN DASHBOARD");
-        sub.setStyle("-fx-text-fill: #8b949e; -fx-font-size: 11px;");
-        
-        HBox pills = new HBox(10);
-        pills.setAlignment(Pos.CENTER);
-        Label idLabel = new Label("INSTANCE: ACTIVE");
-        idLabel.setStyle("-fx-background-color: #21262d; -fx-text-fill: #58a6ff; -fx-padding: 5 15; -fx-background-radius: 15; -fx-font-weight: bold;");
-        statusLabel = new Label("STATUS: READY");
-        statusLabel.setStyle("-fx-background-color: #238636; -fx-text-fill: white; -fx-padding: 5 15; -fx-background-radius: 15; -fx-font-weight: bold;");
-        pills.getChildren().addAll(idLabel, statusLabel);
-        
-        header.getChildren().addAll(title, sub, pills);
-        root.setTop(header);
+        // Header
+        Label title = new Label("ARISE SS TOOL");
+        title.getStyleClass().add("header-title");
 
-        // --- CENTER GRID (Ocean Style) ---
-        GridPane grid = new GridPane();
-        grid.setHgap(15);
-        grid.setVgap(15);
-        grid.setPadding(new Insets(20));
-        grid.setAlignment(Pos.CENTER);
+        // Agreement Overlay Logic
+        showAgreement(stage);
 
-        // Cards
-        grid.add(createCard("OPERATING SYSTEM", System.getProperty("os.name")), 0, 0);
-        grid.add(createCard("USER ACCOUNT", System.getProperty("user.name")), 1, 0);
-        
-        filesScannedLabel = new Label("0");
-        grid.add(createCard("FILES SCANNED", filesScannedLabel), 0, 1);
-        
-        threatsLabel = new Label("0");
-        grid.add(createCard("FLAGS DETECTED", threatsLabel), 1, 1);
+        // Scan Controls
+        scanBtn = new Button("START SCAN");
+        ProgressBar pb = new ProgressBar(0);
+        pb.setPrefWidth(500);
 
-        root.setCenter(grid);
+        // Results Panel
+        HBox resultsBox = new HBox(20);
+        cleanLabel = new Label("CLEAN: 0");
+        suspiciousLabel = new Label("SUSPICIOUS: 0");
+        detectedLabel = new Label("DETECTED: 0");
+        resultsBox.getChildren().addAll(cleanLabel, suspiciousLabel, detectedLabel);
 
-        // --- BOTTOM CONSOLE & SCAN ---
-        VBox bottom = new VBox(15);
-        bottom.setPadding(new Insets(20));
-        
+        // Log
         logArea = new TextArea();
         logArea.setEditable(false);
-        logArea.setPrefHeight(150);
-        logArea.getStyleClass().add("ocean-console");
+        logArea.setPrefHeight(200);
 
-        progressBar = new ProgressBar(0);
-        progressBar.setMaxWidth(Double.MAX_VALUE);
+        scanBtn.setOnAction(e -> runScan(pb));
 
-        Button scanBtn = new Button("LAUNCH OCEAN-GRADE SCAN");
-        scanBtn.setMaxWidth(Double.MAX_VALUE);
-        scanBtn.getStyleClass().add("ocean-btn");
-
-        bottom.getChildren().addAll(logArea, progressBar, scanBtn);
-        root.setBottom(bottom);
-
-        // Scan Action
-        scanBtn.setOnAction(e -> {
-            scanBtn.setDisable(true);
-            statusLabel.setText("SCANNING...");
-            statusLabel.setStyle("-fx-background-color: #d29922; -fx-text-fill: black;");
-            
-            new Thread(new ScannerEngine((progress, msg, severity, count, threats) -> {
-                Platform.runLater(() -> {
-                    if (progress >= 0) progressBar.setProgress(progress);
-                    if (msg != null) logArea.appendText(msg + "\n");
-                    if (count >= 0) filesScannedLabel.setText(String.valueOf(count));
-                    if (threats >= 0) threatsLabel.setText(String.valueOf(threats));
-                    
-                    if (progress >= 1.0) {
-                        scanBtn.setDisable(false);
-                        if (threats > 0) {
-                            statusLabel.setText("CHEATING");
-                            statusLabel.setStyle("-fx-background-color: #da3633; -fx-text-fill: white;");
-                        } else {
-                            statusLabel.setText("CLEAN");
-                            statusLabel.setStyle("-fx-background-color: #238636; -fx-text-fill: white;");
-                        }
-                    }
-                });
-            })).start();
-        });
-
-        Scene scene = new Scene(root, 750, 650);
+        root.getChildren().addAll(title, scanBtn, pb, resultsBox, new Label("Scan Log:"), logArea);
+        
+        Scene scene = new Scene(root, 800, 600);
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
-        stage.setScene(scene);
-        stage.setTitle("Ocean Style Anti-Cheat");
+        stage.setTitle("Arise SS Tool - Minecraft Verification");
         stage.show();
     }
 
-    private VBox createCard(String label, String value) {
-        return createCard(label, new Label(value));
+    private void showAgreement(Stage owner) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Agreement Required");
+        alert.setHeaderText("User Consent");
+        alert.setContentText("This tool scans Minecraft directories and running processes. No personal files are accessed. Do you agree?");
+        
+        ButtonType agree = new ButtonType("I AGREE");
+        ButtonType decline = new ButtonType("DECLINE", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(agree, decline);
+
+        alert.showAndWait().ifPresent(type -> {
+            if (type == decline) System.exit(0);
+        });
     }
 
-    private VBox createCard(String label, Label valueLabel) {
-        VBox card = new VBox(5);
-        card.setPrefSize(340, 80);
-        card.getStyleClass().add("ocean-card");
+    private void runScan(ProgressBar pb) {
+        ScannerEngine engine = new ScannerEngine(sigManager);
+        pb.progressProperty().bind(engine.progressProperty());
         
-        Label lbl = new Label(label);
-        lbl.setStyle("-fx-text-fill: #8b949e; -fx-font-size: 10px; -fx-font-weight: bold;");
+        engine.messageProperty().addListener((obs, old, msg) -> logArea.appendText(msg + "\n"));
         
-        valueLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");
-        
-        card.getChildren().addAll(lbl, valueLabel);
-        return card;
+        engine.setOnSucceeded(e -> {
+            Map<String, List<String>> res = engine.getValue();
+            detectedLabel.setText("DETECTED: " + res.get("RED").size());
+            suspiciousLabel.setText("SUSPICIOUS: " + res.get("YELLOW").size());
+            if(res.get("RED").isEmpty() && res.get("YELLOW").isEmpty()) cleanLabel.setText("CLEAN: No Issues Found");
+        });
+
+        new Thread(engine).start();
     }
 
     public static void main(String[] args) { launch(args); }
