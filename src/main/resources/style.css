@@ -1,33 +1,25 @@
-.ocean-bg {
-    -fx-background-color: linear-gradient(to bottom, #0a192f, #112240);
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: #0a192f;
 }
 
-.header-title {
-    -fx-font-size: 32px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #64ffda;
-    -fx-effect: dropshadow(three-pass-box, rgba(100, 255, 218, 0.4), 10, 0, 0, 0);
-}
-
-.button {
-    -fx-background-color: #233554;
+.tab {
+    -fx-background-color: #112240;
     -fx-text-fill: white;
+}
+
+.tab:selected {
+    -fx-background-color: #233554;
     -fx-border-color: #64ffda;
-    -fx-padding: 10 20;
+    -fx-border-width: 0 0 2 0;
 }
 
-.button:hover {
-    -fx-background-color: #64ffda;
-    -fx-text-fill: #0a192f;
-}
-
-.text-area {
+.list-view {
+    -fx-background-color: #112240;
     -fx-control-inner-background: #112240;
-    -fx-text-fill: #8892b0;
-    -fx-font-family: 'Consolas';
 }
 
-.label {
-    -fx-text-fill: #ccd6f6;
-    -fx-font-size: 14px;
+.list-cell {
+    -fx-text-fill: #64ffda;
+    -fx-border-color: #233554;
+    -fx-border-width: 0 0 1 0;
 }
